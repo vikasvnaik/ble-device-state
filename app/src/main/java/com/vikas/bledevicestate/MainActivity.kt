@@ -1,12 +1,15 @@
 package com.vikas.bledevicestate
 
 import android.Manifest
+import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -37,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         permissionManager = PermissionManager(this)
         if (isAllPermissionsPermitted()) {
+            checkBluetoothStatus()
             startService(Intent(this, BluetoothLeService::class.java))
         }
     }
@@ -150,6 +154,7 @@ class MainActivity : AppCompatActivity() {
 
                 override fun onPermissionGranted() {
                     if (isAllPermissionsPermitted()) {
+                        checkBluetoothStatus()
                         startService(Intent(this@MainActivity, BluetoothLeService::class.java))
                     }
                 }
@@ -165,6 +170,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             REQUEST_PERMISSION -> {
                 if (isAllPermissionsPermitted()) {
+                    checkBluetoothStatus()
                     startService(Intent(this@MainActivity, BluetoothLeService::class.java))
                 }
             }
@@ -173,5 +179,21 @@ class MainActivity : AppCompatActivity() {
 
     private fun openAppSetting(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    fun checkBluetoothStatus() {
+        try {
+            val mBtAdapter = BluetoothAdapter.getDefaultAdapter()
+            if (mBtAdapter != null) {
+                if (!mBtAdapter.isEnabled) {
+                    mBtAdapter.enable()
+                    Handler(Looper.getMainLooper()).postDelayed({
+                            startService(Intent(this@MainActivity, BluetoothLeService::class.java))
+                    }, 1000)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }
