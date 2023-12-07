@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -58,9 +59,9 @@ class MainActivity : AppCompatActivity() {
                 TAG,
                 "characteristic.getStringValue(1) = $batteryLevel"
             )
-            findViewById<TextView>(R.id.state_of_charge).text = batteryLevel.toString()
+            findViewById<TextView>(R.id.status).visibility = View.GONE
+            findViewById<TextView>(R.id.state_of_charge).text = "$batteryLevel%"
             findViewById<TextView>(R.id.distance_to_empty).text = "${(batteryLevel * 1.2)} km"
-            // do something with battery level
         }
     }
 
