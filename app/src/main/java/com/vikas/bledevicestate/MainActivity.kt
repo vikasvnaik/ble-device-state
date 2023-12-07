@@ -9,6 +9,8 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -43,7 +45,12 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         val filter = IntentFilter()
         filter.addAction("ACTION_DATA_AVAILABLE")
-        registerReceiver(receiver, filter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            registerReceiver(receiver, filter, RECEIVER_EXPORTED)
+        } else {
+            registerReceiver(receiver, filter)
+        }
+
     }
 
     override fun onDestroy() {
@@ -60,8 +67,17 @@ class MainActivity : AppCompatActivity() {
                 "characteristic.getStringValue(1) = $batteryLevel"
             )
             findViewById<TextView>(R.id.status).visibility = View.GONE
+            findViewById<TextView>(R.id.state_of_charge_title).visibility = View.VISIBLE
+            findViewById<TextView>(R.id.distance_to_empty).visibility = View.VISIBLE
+            findViewById<BatteryView>(R.id.battery_view).visibility = View.VISIBLE
+            //findViewById<ImageView>(R.id.distance_to_empty_icon).visibility = View.VISIBLE
+            findViewById<TextView>(R.id.distance_to_empty_tittle).visibility = View.VISIBLE
+            findViewById<LinearLayout>(R.id.state_of_charge_ll).visibility = View.VISIBLE
+
+            findViewById<BatteryView>(R.id.battery_view).setPercent(batteryLevel)
             findViewById<TextView>(R.id.state_of_charge).text = "$batteryLevel%"
-            findViewById<TextView>(R.id.distance_to_empty).text = "${(batteryLevel * 1.2)} km"
+            val distance = (batteryLevel * 1.2)
+            findViewById<TextView>(R.id.distance_to_empty).text = String.format("%.1f", distance) + "km"//"${(batteryLevel * 1.2)} km"
         }
     }
 

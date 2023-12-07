@@ -2,4 +2,9 @@
 <resources>
 
     <style name="Theme.BleDeviceState" parent="android:Theme.Material.Light.NoActionBar" />
+    <declare-styleable name="BatteryView">
+        <attr name="bv_charging" format="boolean" />
+        <attr name="bv_percent" format="integer" />
+    </declare-styleable>
+
 </resources>

@@ -30,6 +30,7 @@ class BluetoothLeService : Service() {
     var BATTERY_LEVEL_UUID = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")
     val EXTRAS_DEVICE_BATTERY = "DEVICE_BATTERY"
     public val ACTION_DATA_AVAILABLE = "ACTION_DATA_AVAILABLE"
+    val scanResult: ArrayList<String> = ArrayList()
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
@@ -92,11 +93,10 @@ class BluetoothLeService : Service() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             val device: BluetoothDevice =
                 result.device // ...do whatever you want with this found device
-            //if (device.address == "84:F7:03:1B:96:CD"){
+            if (device.address == "C3:B1:F2:7E:FC:C1"){
             Log.d(TAG, "scan result : ${device.name} ${device.address}")
-            //scanner?.stopScan(scanCallback)
             connectToDevice(device)
-            //}
+            }
         }
 
         override fun onBatchScanResults(results: List<ScanResult?>?) {

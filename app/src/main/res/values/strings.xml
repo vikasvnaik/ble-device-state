@@ -4,5 +4,7 @@
     <string name="goto_settings_to_grant_location_permission">The application requires access to Location for using services of Bolt.Earth. Please grant the permission to proceed further.</string>
     <string name="goto_settings_to_grant_bluetooth_permission">The application requires access to Bluetooth for using services of Bolt.Earth. Please grant the permission to proceed further.</string>
     <string name="goto_settings_to_grant_permission">Go to Settings and Grant the permission to use this feature.</string>
+    <string name="state_of_charge">State of Charge</string>
+    <string name="distance_to_empty">Distance to Empty</string>
 
 </resources>
