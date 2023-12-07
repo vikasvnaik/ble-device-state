@@ -24,7 +24,7 @@ import androidx.core.app.ActivityCompat
 import java.util.UUID
 
 class BluetoothLeService : Service() {
-    val TAG = "BluetoothLeService"
+    val TAG =  BluetoothLeService::class.java.simpleName
     var scanner: BluetoothLeScanner? = null
     var BATTERY_SERVICE_UUID = UUID.fromString("0000180f-0000-1000-8000-00805f9b34fb")
     var BATTERY_LEVEL_UUID = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")
@@ -77,14 +77,6 @@ class BluetoothLeService : Service() {
                     Manifest.permission.BLUETOOTH_SCAN
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                Log.d(TAG, "BLE permission not granted")
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return
             }
             Log.d(TAG, "BLE permission granted")
