@@ -93,10 +93,10 @@ class BluetoothLeService : Service() {
         override fun onScanResult(callbackType: Int, result: ScanResult) {
             val device: BluetoothDevice =
                 result.device // ...do whatever you want with this found device
-            if (device.address == "C3:B1:F2:7E:FC:C1"){
+            //if (device.address == "C3:B1:F2:7E:FC:C1"){
             Log.d(TAG, "scan result : ${device.name} ${device.address}")
             connectToDevice(device)
-            }
+            //}
         }
 
         override fun onBatchScanResults(results: List<ScanResult?>?) {
