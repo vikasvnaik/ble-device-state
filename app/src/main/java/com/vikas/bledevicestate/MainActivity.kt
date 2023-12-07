@@ -186,6 +186,9 @@ class MainActivity : AppCompatActivity() {
             val mBtAdapter = BluetoothAdapter.getDefaultAdapter()
             if (mBtAdapter != null) {
                 if (!mBtAdapter.isEnabled) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        Toast.makeText(this, "Please enable Bluetooth and relaunch the app", Toast.LENGTH_LONG).show()
+                    }
                     mBtAdapter.enable()
                     Handler(Looper.getMainLooper()).postDelayed({
                             startService(Intent(this@MainActivity, BluetoothLeService::class.java))
