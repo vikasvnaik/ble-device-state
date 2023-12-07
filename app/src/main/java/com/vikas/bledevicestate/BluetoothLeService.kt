@@ -41,6 +41,7 @@ class BluetoothLeService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
+
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
@@ -108,7 +109,6 @@ class BluetoothLeService : Service() {
     }
 
     fun connectToDevice(device: BluetoothDevice){
-        // val gatt: BluetoothGatt =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.BLUETOOTH_CONNECT
@@ -116,6 +116,7 @@ class BluetoothLeService : Service() {
         ) {
             return
         }
+
         device.connectGatt(this, false, bluetoothGattCallback, BluetoothDevice.TRANSPORT_LE)
     }
 

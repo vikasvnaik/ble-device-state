@@ -45,6 +45,12 @@ class MainActivity : AppCompatActivity() {
         registerReceiver(receiver, filter)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
+        stopService(Intent(this, BluetoothLeService::class.java))
+    }
+
     var receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             val batteryLevel = intent.getIntExtra("DEVICE_BATTERY", 0)
